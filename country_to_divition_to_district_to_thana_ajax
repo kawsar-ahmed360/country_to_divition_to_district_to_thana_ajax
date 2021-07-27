@@ -1,0 +1,83 @@
+
+<script>
+   $('#divition_id').on('change',function(){
+     var divitionId = $(this).val();
+     if(divitionId!=null){
+
+       $.ajax({
+         url:"{{route('DivitionToDisctrict')}}",
+         type:"GET",
+         data:{divitionId:divitionId},
+         success:function(data){
+          
+          var html = " <option disabled selected>------Select District-----</option>";
+          $.each(data,function(key,v){
+            html+='<option value="'+v.id+'">'+v.name+'</option>';
+          })
+          $('#district_id').empty().html(html);
+         }
+       })
+
+     }else{
+       alert('value empty');
+     }
+     
+   })
+
+
+
+   $('#district_id').on('change',function(){
+     var upzilaId = $(this).val();
+      
+     if(upzilaId!=null){
+       $.ajax({
+
+        url:"{{route('DisctrictToUpozila')}}",
+         type:"GET",
+         data:{upzilaId:upzilaId},
+         success:function(data){
+
+            var html = " <option disabled selected>------Select Upozilla-----</option>";
+            $.each(data,function(key,v){
+              html+='<option value="'+v.id+'">'+v.name+'</option>';
+            })
+
+            $('#upazilla_id').empty().html(html);
+         }
+       })
+     }else{
+       alert('district id null');
+     }
+   })
+
+
+   $('#upazilla_id').on('change',function(){
+    var unionId = $(this).val();
+
+    if(unionId!=null){
+      $.ajax({
+        url:"{{route('UpozilaToThana')}}",
+         type:"GET",
+         data:{unionId:unionId},
+
+         success:function(data){
+
+          var html = " <option disabled selected>------Select Union-----</option>";
+
+            $.each(data,function(key,v){
+
+              html+='<option value="'+v.id+'">'+v.name+'</option>';
+
+            })
+
+            $('#union_id').empty().html(html);
+         }
+
+      })
+    }else{
+      alert('upozila not found');
+    }
+   })
+
+
+</script>
